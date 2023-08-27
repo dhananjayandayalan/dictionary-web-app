@@ -1,35 +1,83 @@
 // Font and theme DOM configurations
 
-const darkmode_toggle = document.getElementById('darkmode-toggle');
+const darkmodeToggle = document.getElementById('darkmode-toggle');
 const body = document.getElementsByTagName('body')[0];
-const font = document.getElementById('font');
+const fontSelect = document.getElementsByClassName('font-select')[0];
+const searchInput = document.getElementById('search-input');
+const searchButton = document.getElementById('search-button');
+const errorText = document.getElementsByClassName('error-text')[0];
+const options = document.getElementsByTagName('li');
+
+searchInput.value = '';
 
 const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 if (isDark) {
-  darkmode_toggle.checked = true;
+  darkmodeToggle.checked = true;
 } else {
-  darkmode_toggle.checked = false;
+  darkmodeToggle.checked = false;
 }
 
-if (darkmode_toggle.checked) {
+if (darkmodeToggle.checked) {
   body.classList.add('dark-mode');
 }
 
-darkmode_toggle.addEventListener('change', () => {
+darkmodeToggle.addEventListener('change', () => {
   body.classList.toggle('dark-mode');
 });
 
-if (font.value != 'sans-serif') {
-  body.classList.add(font.value + '');
+for (let i = 0; i < options.length; i++) {
+  options[i].addEventListener('click', () => {
+    body.removeAttribute('class');
+    if (darkmodeToggle.checked) {
+      body.classList.add('dark-mode');
+    }
+    body.classList.add(
+      options[i].textContent === 'Serif'
+        ? 'serif'
+        : options[i].textContent === 'Mono'
+        ? 'mono'
+        : 'sans'
+    );
+    fontSelect.value = options[i].textContent;
+    fontSelect.classList.toggle('open');
+  });
 }
 
-font.addEventListener('click', () => {
-  body.removeAttribute('class');
-  if (darkmode_toggle.checked) {
-    body.classList.add('dark-mode');
-  }
-  if (font.value !== 'sans-serif') {
-    body.classList.add(font.value);
+body.classList.add(
+  fontSelect.value === 'Serif'
+    ? 'serif'
+    : fontSelect.value === 'Mono'
+    ? 'mono'
+    : 'sans'
+);
+
+fontSelect.addEventListener('click', () => {
+  fontSelect.classList.toggle('open');
+});
+
+// font.addEventListener('click', () => {
+//   body.removeAttribute('class');
+//   if (darkmodeToggle.checked) {
+//     body.classList.add('dark-mode');
+//   }
+//   if (font.value !== 'sans-serif') {
+//     body.classList.add(font.value);
+//   }
+// });
+
+searchButton.addEventListener('click', () => {
+  if (!searchInput.value) {
+    errorText.classList.remove('hide');
+    searchInput.style.outline = '1px solid #ff5252';
+  } else {
+    searchInput.value = '';
   }
 });
+
+searchInput.onfocus = (event) => {
+  if (!errorText.classList.contains('hide')) {
+    errorText.classList.add('hide');
+    searchInput.removeAttribute('style');
+  }
+};

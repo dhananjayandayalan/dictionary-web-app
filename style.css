@@ -1,5 +1,5 @@
 * {
-  padding: 0;
+  /* padding: 0; */
   margin: 0;
   font: inherit;
 }
@@ -68,12 +68,12 @@ header .mode .divider {
   position: relative;
 }
 
-.font-theme select {
+/* .font-theme select {
   border: none;
   background: none;
   outline: none;
   appearance: none;
-  padding-right: 2em;
+  padding-right: 1.4em;
   font-weight: bold;
   font-size: clamp(0.88rem, calc(0.64rem + 1.02vw), 1.13rem);
 }
@@ -83,6 +83,56 @@ header .mode .divider {
   right: 0;
   top: 30%;
   pointer-events: none;
+} */
+
+.font-theme .font-select {
+  border: none;
+  outline: none;
+  width: 120px;
+  text-align: right;
+  padding-right: 20px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.font-theme img {
+  position: absolute;
+  top: 7px;
+  right: -2px;
+  cursor: pointer;
+  pointer-events: none;
+  transition: all 0.2s;
+  transform: rotate(-180deg);
+}
+
+.font-theme .list {
+  position: absolute;
+  top: 40px;
+  left: -55px;
+  width: 180px;
+  list-style-type: none;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  padding: 1.5rem;
+  z-index: 10;
+  background: var(--color-white);
+  box-shadow: 0px 5px 30px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  display: none;
+}
+
+.font-theme .list li:hover {
+  cursor: pointer;
+  color: var(--color-accent);
+}
+
+.open ~ img {
+  transform: rotate(0deg);
+}
+
+.open ~ .list {
+  display: flex;
 }
 
 /* Dark Theme Toggle Button */
@@ -158,25 +208,48 @@ label::before {
   caret-color: var(--color-accent);
 }
 
+.search-bar .search-bar-input::placeholder {
+  font-weight: 400;
+}
+
 .search-bar .search-bar-input:focus {
   outline: 1px solid var(--color-accent);
 }
 
-.search-bar .search-bar-input:focus::placeholder {
-  color: transparent;
-}
-
-.search-bar .search {
+.search-bar .search-button {
   position: absolute;
   border: none;
   background: none;
-  top: clamp(1rem, calc(0.52rem + 2.04vw), 1.5rem);
+  top: clamp(0.88rem, calc(0.4rem + 2.04vw), 1.38rem);
   right: 24px;
   cursor: pointer;
 }
 
+.hide {
+  display: none;
+}
+
+.error-text {
+  position: absolute;
+  top: 65px;
+  left: 2px;
+  color: var(--color-warning);
+}
+
 /* Dark Theme */
+
+/* @media (prefers-color-scheme: dark) {
+  
+} */
 
 /* Serif Font */
 
+.serif * {
+  font-family: var(--font-serif);
+}
+
 /* Mono Font */
+
+.mono * {
+  font-family: var(--font-mono);
+}

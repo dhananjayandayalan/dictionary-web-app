@@ -20,15 +20,21 @@
 
 <body>
   <header>
-    <img src="./assets/images/logo.svg" class="logo" alt="Logo" aria-hidden="true">
+    <a href="/"><img src="./assets/images/logo.svg" class="logo" alt="Logo" aria-hidden="true"></a>
     <div class="mode">
       <div class="font-theme">
-        <select name="font" id="font">
+        <!-- <select name="font" id="font">
           <option value="sans-serif">Sans Serif</option>
           <option value="serif">Serif</option>
           <option value="mono">Mono</option>
-        </select>
+        </select> -->
+        <input type="text" class="font-select" role="select" value="Sans Serif" readonly>
         <img src="./assets/images/icon-arrow-down.svg" alt="Down Arrow" aria-hidden="true">
+        <ul class="list">
+          <li role="option" style="font-family: 'Inter', sans-serif; font-weight: 700;">Sans Serif</li>
+          <li role="option" style="font-family: 'Lora', serif; font-weight: 700;">Serif</li>
+          <li role="option" style="font-family: 'Inconsolata', monospace; font-weight: 700;">Mono</li>
+        </ul>
       </div>
       <span class="divider"></span>
       <div class="dark-theme">
@@ -43,8 +49,10 @@
   </header>
   <main>
     <div class="search-bar">
-      <input type="text" class="search-bar-input" placeholder="Enter a word">
-      <button class="search"><img src="./assets/images/icon-search.svg" alt="Search Icon" aria-hidden="true"></button>
+      <input type="text" class="search-bar-input" placeholder="Enter a word" id="search-input">
+      <span class="error-text hide">Whoops, can't be empty…</span>
+      <button class="search-button" id="search-button"><img src="./assets/images/icon-search.svg" alt="Search Icon"
+          aria-hidden="true"></button>
     </div>
   </main>
   <footer></footer>
