@@ -97,7 +97,6 @@ header .mode .divider {
 
 .dark-theme {
   position: relative;
-  transition: all 0.3s;
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -116,6 +115,7 @@ label {
 
 label::before {
   position: absolute;
+  transition: all 0.2s;
   content: '';
   width: 14px;
   height: 14px;
