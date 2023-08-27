@@ -1,0 +1,182 @@
+* {
+  padding: 0;
+  margin: 0;
+  font: inherit;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-accent: #a445ed;
+  --color-warning: #ff5252;
+  --color-black-1: #050505;
+  --color-black-2: #1f1f1f;
+  --color-black-3: #2d2d2d;
+  --color-black-4: #3a3a3a;
+  --color-grey-1: #757575;
+  --color-grey-2: #e9e9e9;
+  --color-grey-3: #f4f4f4;
+  --color-white: #ffffff;
+
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Lora', serif;
+  --font-mono: 'Inconsolata', monospace;
+}
+
+/* Default Theme */
+
+body > * {
+  max-width: calc(737px - 1.5rem);
+  padding-inline: 1.5rem;
+  margin-top: clamp(1.5rem, calc(-0.65rem + 9.16vw), 3.75rem);
+  margin-inline: auto;
+  font-family: var(--font-sans);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: clamp(1.5rem, calc(-0.17rem + 7.12vw), 3.25rem);
+}
+
+header .logo {
+  width: clamp(1.75rem, calc(1.51rem + 1.02vw), 2rem);
+  height: clamp(2rem, calc(1.76rem + 1.02vw), 2.25rem);
+}
+
+header .mode {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+header .mode .divider {
+  width: 1px;
+  height: 32px;
+  background-color: var(--color-grey-2);
+}
+
+/* Font Changing Dropdown */
+
+.font-theme {
+  transition: all 0.3s;
+  position: relative;
+}
+
+.font-theme select {
+  border: none;
+  background: none;
+  outline: none;
+  appearance: none;
+  padding-right: 2em;
+  font-weight: bold;
+  font-size: clamp(0.88rem, calc(0.64rem + 1.02vw), 1.13rem);
+}
+
+.font-theme img {
+  position: absolute;
+  right: 0;
+  top: 30%;
+  pointer-events: none;
+}
+
+/* Dark Theme Toggle Button */
+
+#darkmode-toggle {
+  /* Hiding Checkbox for Style Purpose */
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  margin-left: -4px;
+}
+
+.dark-theme {
+  position: relative;
+  transition: all 0.3s;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+label {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background-color: var(--color-grey-1);
+  border-radius: 10px;
+  margin-right: 12px;
+}
+
+label::before {
+  position: absolute;
+  content: '';
+  width: 14px;
+  height: 14px;
+  border-radius: 14px;
+  background: var(--color-white);
+  top: 3px;
+  left: 4px;
+}
+
+#darkmode-toggle:checked + label {
+  background: var(--color-accent);
+}
+
+#darkmode-toggle:checked + label::before {
+  left: 22px;
+}
+
+#darkmode-toggle:checked ~ svg path {
+  stroke: var(--color-accent);
+}
+
+/* Search Bar */
+
+.search-bar {
+  position: relative;
+  width: 100%;
+}
+
+.search-bar .search-bar-input {
+  width: 100%;
+  height: clamp(3rem, calc(2.05rem + 4.07vw), 4rem);
+  border: none;
+  outline: none;
+  background: var(--color-grey-3);
+  border-radius: 16px;
+  font-weight: 700;
+  padding-left: 1.5rem;
+  font-size: clamp(1rem, calc(0.76rem + 1.02vw), 1.25rem);
+  cursor: pointer;
+  caret-color: var(--color-accent);
+}
+
+.search-bar .search-bar-input:focus {
+  outline: 1px solid var(--color-accent);
+}
+
+.search-bar .search-bar-input:focus::placeholder {
+  color: transparent;
+}
+
+.search-bar .search {
+  position: absolute;
+  border: none;
+  background: none;
+  top: clamp(1rem, calc(0.52rem + 2.04vw), 1.5rem);
+  right: 24px;
+  cursor: pointer;
+}
+
+/* Dark Theme */
+
+/* Serif Font */
+
+/* Mono Font */
