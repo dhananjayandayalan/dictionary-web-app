@@ -31,9 +31,9 @@
         <input type="text" class="font-select" role="select" value="Sans Serif" readonly>
         <img src="./assets/images/icon-arrow-down.svg" alt="Down Arrow" aria-hidden="true">
         <ul class="list">
-          <li role="option" style="font-family: 'Inter', sans-serif; font-weight: 700;">Sans Serif</li>
-          <li role="option" style="font-family: 'Lora', serif; font-weight: 700;">Serif</li>
-          <li role="option" style="font-family: 'Inconsolata', monospace; font-weight: 700;">Mono</li>
+          <li role="option" style="font-family: 'Inter', sans-serif;">Sans Serif</li>
+          <li role="option" style="font-family: 'Lora', serif;">Serif</li>
+          <li role="option" style="font-family: 'Inconsolata', monospace;">Mono</li>
         </ul>
       </div>
       <span class="divider"></span>
@@ -48,12 +48,18 @@
     </div>
   </header>
   <main>
-    <div class="search-bar">
+    <section class="search-bar">
       <input type="text" class="search-bar-input" placeholder="Enter a word" id="search-input">
       <span class="error-text hide">Whoops, can't be empty…</span>
       <button class="search-button" id="search-button"><img src="./assets/images/icon-search.svg" alt="Search Icon"
           aria-hidden="true"></button>
-    </div>
+    </section>
+    <section class="not-found hide">
+      <span>🙄</span>
+      <h1>No Definitions Found</h1>
+      <p>Sorry pal, we couldn't find definitions for the word you were looking for. You can try the search again at
+        later time or head to the web instead.</p>
+    </section>
   </main>
   <footer></footer>
 </body>

@@ -122,6 +122,10 @@ header .mode .divider {
   display: none;
 }
 
+.font-theme .list li {
+  font-weight: 700;
+}
+
 .font-theme .list li:hover {
   cursor: pointer;
   color: var(--color-accent);
@@ -234,6 +238,27 @@ label::before {
   top: 65px;
   left: 2px;
   color: var(--color-warning);
+}
+
+.not-found {
+  text-align: center;
+  margin-top: clamp(5rem, calc(2.38rem + 11.2vw), 7.75rem);
+}
+
+.not-found span {
+  display: inline-block;
+  font-size: 48px;
+}
+
+.not-found h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 44px;
+}
+
+.not-found p {
+  font-size: 1.125rem;
+  margin-top: 24px;
 }
 
 /* Dark Theme */
