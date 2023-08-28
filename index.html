@@ -61,10 +61,26 @@
       <p>Sorry pal, we couldn't find definitions for the word you were looking for. You can try the search again at
         later time or head to the web instead.</p>
     </section>
-    <section class="word"></section>
-    <section class="meanings"></section>
+    <section class="word hide">
+      <div class="phonetic">
+        <h1></h1>
+        <h2></h2>
+      </div>
+      <audio id="audio-player" controls>
+
+      </audio>
+      <div class="play-button hide" role="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" viewBox="0 0 75 75">
+          <g fill="#A445ED" fill-rule="evenodd">
+            <circle cx="37.5" cy="37.5" r="37.5" opacity=".25" />
+            <path d="M29 27v21l21-10.5z" />
+          </g>
+        </svg>
+      </div>
+    </section>
+    <section class="meanings hide"></section>
   </main>
-  <footer class="source-urls"></footer>
+  <footer class="source-urls hide"></footer>
 </body>
 
 </html>

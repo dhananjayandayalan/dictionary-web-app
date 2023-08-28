@@ -9,6 +9,14 @@ const errorText = document.getElementsByClassName('error-text')[0];
 const options = document.getElementsByTagName('li');
 const loadingGif = document.getElementsByClassName('loading-gif')[0];
 const notFound = document.getElementsByClassName('not-found')[0];
+const audioPlayer = document.getElementById('audio-player');
+const playButton = document.getElementsByClassName('play-button')[0];
+const wordEl = document.querySelector('.phonetic h1');
+const phoneticEl = document.querySelector('.phonetic h2');
+
+const wordSection = document.getElementsByClassName('word')[0];
+const meaningSection = document.getElementsByClassName('meanings')[0];
+const sourceUrlSection = document.getElementsByClassName('source-urls')[0];
 
 searchInput.value = '';
 
@@ -96,8 +104,8 @@ const searchResult = async () => {
   } else {
     const data = await fetchData(searchInput.value);
     if (Array.isArray(data)) {
-      const { word, phonetics, meanings, sourceUrls } = data[0];
-      renderData(word, phonetics, meanings, sourceUrls);
+      const { word, phonetic, phonetics, meanings, sourceUrls } = data[0];
+      renderData(word, phonetic, phonetics, meanings, sourceUrls);
     }
   }
 };
@@ -105,9 +113,13 @@ const searchResult = async () => {
 const fetchData = async (text) => {
   const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${text}`;
 
-  if (!notFound.classList.contains('hide')) {
-    notFound.classList.toggle('hide');
-  }
+  !notFound.classList.contains('hide') && notFound.classList.toggle('hide');
+  !wordSection.classList.contains('hide') && wordSection.classList.add('hide');
+  !meaningSection.classList.contains('hide') &&
+    meaningSection.classList.add('hide');
+  !sourceUrlSection.classList.contains('hide') &&
+    sourceUrlSection.classList.add('hide');
+
   loadingGif.classList.toggle('hide');
   try {
     const response = await fetch(url);
@@ -118,9 +130,11 @@ const fetchData = async (text) => {
       return responseData;
     } else {
       removeMessage();
-      if (!notFound.classList.contains('hide')) {
-        notFound.classList.toggle('hide');
-      }
+      !notFound.classList.contains('hide') && notFound.classList.toggle('hide');
+      wordSection.classList.remove('hide');
+      meaningSection.classList.remove('hide');
+      sourceUrlSection.classList.remove('hide');
+
       loadingGif.classList.toggle('hide');
       return await response.json();
     }
@@ -134,4 +148,38 @@ const fetchData = async (text) => {
   }
 };
 
-const renderData = (word, phonetics, meanings, sourceUrls) => {};
+const renderData = (word, phonetic, phonetics, meanings, sourceUrls) => {
+  renderPhonetics(word, phonetic, phonetics);
+};
+
+const renderPhonetics = (word, phonetic = '', phonetics) => {
+  wordEl.innerHTML = word;
+
+  const { text, audio } = phonetics.reduce((initial, data) => {
+    const { text, audio } = data;
+
+    if (text && audio && Object.keys(initial).length === 1) {
+      initial = { ...initial, text, audio };
+    } else {
+      initial = { ...initial, text, audio };
+    }
+
+    return initial;
+  }, {});
+
+  phoneticEl.innerHTML = text ?? phonetic;
+
+  if (audio) {
+    audioPlayer.setAttribute('src', audio);
+    playButton.classList.remove('hide');
+  } else {
+    !playButton.classList.contains('hide') && playButton.classList.add('hide');
+    audioPlayer.removeAttribute('src');
+    audioPlayer.setAttribute('muted', true);
+  }
+};
+
+playButton.addEventListener('click', () => {
+  audioPlayer.controls = true;
+  audioPlayer.play();
+});

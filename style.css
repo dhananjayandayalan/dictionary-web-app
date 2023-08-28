@@ -229,6 +229,48 @@ label::before {
   cursor: pointer;
 }
 
+.word {
+  margin-top: clamp(1.5rem, calc(-0.05rem + 6.62vw), 3.13rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.word .phonetic h1 {
+  font-size: clamp(2rem, calc(0.09rem + 8.14vw), 4rem);
+  padding-bottom: clamp(0.5rem, calc(0.32rem + 0.76vw), 0.69rem);
+  font-weight: 700;
+}
+
+.word .phonetic h2 {
+  font-size: clamp(1.13rem, calc(0.77rem + 1.53vw), 1.5rem);
+  color: var(--color-accent);
+}
+
+.word audio {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.word .play-button {
+  cursor: pointer;
+}
+
+.word .play-button:hover svg g circle {
+  fill: #a445ed;
+  opacity: 1;
+}
+
+.word .play-button:hover svg g path {
+  fill: var(--color-white);
+}
+
+.word .play-button svg {
+  width: clamp(3rem, calc(1.39rem + 6.87vw), 4.69rem);
+  height: clamp(3rem, calc(1.39rem + 6.87vw), 4.69rem);
+}
+
 .loading-gif {
   width: clamp(12.5rem, calc(0.57rem + 50.89vw), 25rem);
   height: clamp(12.5rem, calc(0.57rem + 50.89vw), 25rem);
