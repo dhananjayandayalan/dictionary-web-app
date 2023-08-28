@@ -229,6 +229,14 @@ label::before {
   cursor: pointer;
 }
 
+.loading-gif {
+  width: clamp(12.5rem, calc(0.57rem + 50.89vw), 25rem);
+  height: clamp(12.5rem, calc(0.57rem + 50.89vw), 25rem);
+  display: block;
+  margin-inline: auto;
+  margin-top: 100px;
+}
+
 .hide {
   display: none;
 }
@@ -259,13 +267,16 @@ label::before {
 .not-found p {
   font-size: 1.125rem;
   margin-top: 24px;
+  color: var(--color-grey-1);
 }
 
 /* Dark Theme */
 
-/* @media (prefers-color-scheme: dark) {
-  
-} */
+/* Sans Font */
+
+.sans * {
+  font-family: var(--font-sans);
+}
 
 /* Serif Font */
 

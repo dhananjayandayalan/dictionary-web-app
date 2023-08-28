@@ -7,20 +7,22 @@ const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const errorText = document.getElementsByClassName('error-text')[0];
 const options = document.getElementsByTagName('li');
+const loadingGif = document.getElementsByClassName('loading-gif')[0];
+const notFound = document.getElementsByClassName('not-found')[0];
 
 searchInput.value = '';
 
 const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-if (isDark) {
-  darkmodeToggle.checked = true;
-} else {
-  darkmodeToggle.checked = false;
-}
+// if (isDark) {
+//   darkmodeToggle.checked = true;
+// } else {
+//   darkmodeToggle.checked = false;
+// }
 
-if (darkmodeToggle.checked) {
-  body.classList.add('dark-mode');
-}
+// if (darkmodeToggle.checked) {
+//   body.classList.add('dark-mode');
+// }
 
 darkmodeToggle.addEventListener('change', () => {
   body.classList.toggle('dark-mode');
@@ -66,18 +68,70 @@ fontSelect.addEventListener('click', () => {
 //   }
 // });
 
-searchButton.addEventListener('click', () => {
-  if (!searchInput.value) {
-    errorText.classList.remove('hide');
-    searchInput.style.outline = '1px solid #ff5252';
-  } else {
-    searchInput.value = '';
+searchButton.addEventListener('click', () => searchResult());
+
+searchInput.onfocus = (event) => {
+  event.preventDefault();
+  removeMessage();
+};
+
+searchInput.addEventListener('keypress', (event) => {
+  if (event.key === 'Enter' && document.activeElement === searchInput) {
+    event.preventDefault();
+    searchResult();
   }
 });
 
-searchInput.onfocus = (event) => {
+const removeMessage = () => {
   if (!errorText.classList.contains('hide')) {
     errorText.classList.add('hide');
     searchInput.removeAttribute('style');
   }
 };
+
+const searchResult = async () => {
+  if (!searchInput.value) {
+    errorText.classList.remove('hide');
+    searchInput.style.outline = '1px solid #ff5252';
+  } else {
+    const data = await fetchData(searchInput.value);
+    if (Array.isArray(data)) {
+      const { word, phonetics, meanings, sourceUrls } = data[0];
+      renderData(word, phonetics, meanings, sourceUrls);
+    }
+  }
+};
+
+const fetchData = async (text) => {
+  const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${text}`;
+
+  if (!notFound.classList.contains('hide')) {
+    notFound.classList.toggle('hide');
+  }
+  loadingGif.classList.toggle('hide');
+  try {
+    const response = await fetch(url);
+    if (response.status !== 200) {
+      const responseData = await response.json();
+      notFound.classList.toggle('hide');
+      loadingGif.classList.toggle('hide');
+      return responseData;
+    } else {
+      removeMessage();
+      if (!notFound.classList.contains('hide')) {
+        notFound.classList.toggle('hide');
+      }
+      loadingGif.classList.toggle('hide');
+      return await response.json();
+    }
+  } catch (err) {
+    console.log(err);
+    return {
+      error: 500,
+      title: 'severe error',
+      message: 'could not reach dictionary api'
+    };
+  }
+};
+
+const renderData = (word, phonetics, meanings, sourceUrls) => {};
