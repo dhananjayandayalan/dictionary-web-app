@@ -117,26 +117,20 @@ const fetchData = async (text) => {
   try {
     const response = await fetch(url);
     if (response.status !== 200) {
-      const responseData = await response.json();
-      notFound.classList.remove('hide');
-      loadingGif.classList.toggle('hide');
-      return responseData;
+      throw new Error('No Data Found');
     } else {
       fetchSuccessActions();
       return await response.json();
     }
   } catch (err) {
-    console.log(err);
-    return {
-      error: 500,
-      title: 'severe error',
-      message: 'could not reach dictionary api'
-    };
+    notFound.classList.remove('hide');
+    loadingGif.classList.toggle('hide');
+    console.error(err);
   }
 };
 
 const preFetchingActions = () => {
-  !notFound.classList.contains('hide') && notFound.classList.toggle('hide');
+  !notFound.classList.contains('hide') && notFound.classList.add('hide');
   !wordSection.classList.contains('hide') && wordSection.classList.add('hide');
   !meaningSection.classList.contains('hide') &&
     meaningSection.classList.add('hide');
@@ -148,7 +142,7 @@ const preFetchingActions = () => {
 
 const fetchSuccessActions = () => {
   removeMessage();
-  !notFound.classList.contains('hide') && notFound.classList.toggle('hide');
+  !notFound.classList.contains('hide') && notFound.classList.add('hide');
   wordSection.classList.remove('hide');
   meaningSection.classList.remove('hide');
   sourceUrlSection.classList.remove('hide');
