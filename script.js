@@ -113,29 +113,16 @@ const searchResult = async () => {
 const fetchData = async (text) => {
   const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${text}`;
 
-  !notFound.classList.contains('hide') && notFound.classList.toggle('hide');
-  !wordSection.classList.contains('hide') && wordSection.classList.add('hide');
-  !meaningSection.classList.contains('hide') &&
-    meaningSection.classList.add('hide');
-  !sourceUrlSection.classList.contains('hide') &&
-    sourceUrlSection.classList.add('hide');
-
-  loadingGif.classList.toggle('hide');
+  preFetchingActions();
   try {
     const response = await fetch(url);
     if (response.status !== 200) {
       const responseData = await response.json();
-      notFound.classList.toggle('hide');
+      notFound.classList.remove('hide');
       loadingGif.classList.toggle('hide');
       return responseData;
     } else {
-      removeMessage();
-      !notFound.classList.contains('hide') && notFound.classList.toggle('hide');
-      wordSection.classList.remove('hide');
-      meaningSection.classList.remove('hide');
-      sourceUrlSection.classList.remove('hide');
-
-      loadingGif.classList.toggle('hide');
+      fetchSuccessActions();
       return await response.json();
     }
   } catch (err) {
@@ -148,8 +135,31 @@ const fetchData = async (text) => {
   }
 };
 
+const preFetchingActions = () => {
+  !notFound.classList.contains('hide') && notFound.classList.toggle('hide');
+  !wordSection.classList.contains('hide') && wordSection.classList.add('hide');
+  !meaningSection.classList.contains('hide') &&
+    meaningSection.classList.add('hide');
+  !sourceUrlSection.classList.contains('hide') &&
+    sourceUrlSection.classList.add('hide');
+
+  loadingGif.classList.toggle('hide');
+};
+
+const fetchSuccessActions = () => {
+  removeMessage();
+  !notFound.classList.contains('hide') && notFound.classList.toggle('hide');
+  wordSection.classList.remove('hide');
+  meaningSection.classList.remove('hide');
+  sourceUrlSection.classList.remove('hide');
+
+  loadingGif.classList.toggle('hide');
+};
+
 const renderData = (word, phonetic, phonetics, meanings, sourceUrls) => {
   renderPhonetics(word, phonetic, phonetics);
+  renderMeanings(meanings);
+  renderSourceUrls(sourceUrls);
 };
 
 const renderPhonetics = (word, phonetic = '', phonetics) => {
@@ -183,3 +193,7 @@ playButton.addEventListener('click', () => {
   audioPlayer.controls = true;
   audioPlayer.play();
 });
+
+const renderMeanings = (meanings) => {};
+
+const renderSourceUrls = (sourceUrls) => {};
