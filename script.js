@@ -6,7 +6,7 @@ const fontSelect = document.getElementsByClassName('font-select')[0];
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const errorText = document.getElementsByClassName('error-text')[0];
-const options = document.getElementsByTagName('li');
+const options = document.getElementsByClassName('option');
 const loadingGif = document.getElementsByClassName('loading-gif')[0];
 const notFound = document.getElementsByClassName('not-found')[0];
 const audioPlayer = document.getElementById('audio-player');
@@ -22,15 +22,15 @@ searchInput.value = '';
 
 const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-// if (isDark) {
-//   darkmodeToggle.checked = true;
-// } else {
-//   darkmodeToggle.checked = false;
-// }
+if (isDark) {
+  darkmodeToggle.checked = true;
+} else {
+  darkmodeToggle.checked = false;
+}
 
-// if (darkmodeToggle.checked) {
-//   body.classList.add('dark-mode');
-// }
+if (darkmodeToggle.checked) {
+  body.classList.add('dark-mode');
+}
 
 darkmodeToggle.addEventListener('change', () => {
   body.classList.toggle('dark-mode');
@@ -188,6 +188,8 @@ playButton.addEventListener('click', () => {
   audioPlayer.play();
 });
 
-const renderMeanings = (meanings) => {};
+const renderMeanings = (meanings) => {
+  
+};
 
 const renderSourceUrls = (sourceUrls) => {};

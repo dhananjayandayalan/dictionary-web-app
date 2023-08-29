@@ -31,9 +31,9 @@
         <input type="text" class="font-select" role="select" value="Sans Serif" readonly>
         <img src="./assets/images/icon-arrow-down.svg" alt="Down Arrow" aria-hidden="true">
         <ul class="list">
-          <li role="option" style="font-family: 'Inter', sans-serif;">Sans Serif</li>
-          <li role="option" style="font-family: 'Lora', serif;">Serif</li>
-          <li role="option" style="font-family: 'Inconsolata', monospace;">Mono</li>
+          <li class="option" role="option" style="font-family: 'Inter', sans-serif;">Sans Serif</li>
+          <li class="option" role="option" style="font-family: 'Lora', serif;">Serif</li>
+          <li class="option" role="option" style="font-family: 'Inconsolata', monospace;">Mono</li>
         </ul>
       </div>
       <span class="divider"></span>
@@ -51,8 +51,11 @@
     <section class="search-bar">
       <input type="text" class="search-bar-input" placeholder="Enter a word" id="search-input">
       <span class="error-text hide">Whoops, can't be empty…</span>
-      <button aria-label="Search Button" class="search-button" id="search-button"><img
-          src="./assets/images/icon-search.svg" alt="Search Icon" aria-hidden="true"></button>
+      <button aria-label="Search Button" class="search-button" id="search-button"><svg
+          xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+          <path fill="none" stroke="#A445ED" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="m12.663 12.663 3.887 3.887M1 7.664a6.665 6.665 0 1 0 13.33 0 6.665 6.665 0 0 0-13.33 0Z" />
+        </svg></button>
     </section>
     <img class="loading-gif hide" src="./assets/images/oh-thinking.gif" alt="Thinking GIF" aria-hidden="true">
     <section class="not-found hide">
@@ -78,9 +81,43 @@
         </svg>
       </div>
     </section>
-    <section class="meanings hide"></section>
+    <section class="meanings hide">
+      <!-- <div>
+        <h2>interjection</h2>
+        <h3>Meaning</h3>
+        <ul>
+          <li>
+            <h4>To type on a computer keyboard.</h4>
+            <p>Keyboarding is the part of this job I hate the most.</p>
+          </li>
+          <li>
+            <h4>To type on a computer keyboard.</h4>
+            <p>"Keyboarding is the part of this job I hate the most."</p>
+          </li>
+        </ul>
+        <div class="synonyms">
+          <h3>Synonyms</h3>
+          <ul>
+            <li><a href="javascript:void(0);">electronic keyboard</a></li>
+          </ul>
+        </div>
+        <div class="antonyms">
+          <h3>Synonyms</h3>
+          <ul>
+            <li><a href="javascript:void(0);">electronic keyboard</a></li>
+          </ul>
+        </div>
+      </div> -->
+    </section>
   </main>
-  <footer class="source-urls hide"></footer>
+  <footer class="source-urls hide">
+    <span></span>
+    <h3>Source</h3>
+    <!-- <ul>
+      <li><a href="https://en.wiktionary.org/wiki/keyboard" target="_blank">https://en.wiktionary.org/wiki/keyboard <img
+            src="./assets/images/icon-new-window.svg" aria-hidden="true"></a></li>
+    </ul> -->
+  </footer>
 </body>
 
 </html>
