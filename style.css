@@ -11,6 +11,7 @@
 }
 
 :root {
+  /* Color Variables */
   --color-accent: #a445ed;
   --color-warning: #ff5252;
   --color-black-1: #050505;
@@ -22,11 +23,11 @@
   --color-grey-3: #f4f4f4;
   --color-white: #ffffff;
 
+  /* Font Variables */
   --font-sans: 'Inter', sans-serif;
   --font-serif: 'Lora', serif;
   --font-mono: 'Inconsolata', monospace;
 }
-
 /* Default Theme */
 
 body > * {
@@ -166,6 +167,7 @@ label {
   background-color: var(--color-grey-1);
   border-radius: 10px;
   margin-right: 12px;
+  cursor: pointer;
 }
 
 label::before {
@@ -341,6 +343,10 @@ label::before {
   font-size: clamp(0.94rem, calc(0.76rem + 0.76vw), 1.13rem);
 }
 
+.meanings > div > ul li p {
+  color: var(--color-grey-1);
+}
+
 .synonyms,
 .antonyms {
   display: flex;
@@ -350,6 +356,9 @@ label::before {
 .synonyms ul,
 .antonyms ul {
   list-style-type: none;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .meanings > div > ul li {
@@ -371,12 +380,20 @@ label::before {
   text-decoration: underline;
 }
 
+.source-urls {
+  padding-bottom: 3rem;
+}
+
 .source-urls > span {
   display: block;
   width: 100%;
   height: 1px;
   background-color: #979797;
   margin-bottom: 1.5rem;
+}
+
+.source-urls h3 {
+  text-decoration: underline;
 }
 
 .source-urls ul {

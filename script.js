@@ -1,69 +1,74 @@
 // Font and theme DOM configurations
 
-const darkmodeToggle = document.getElementById('darkmode-toggle');
-const body = document.getElementsByTagName('body')[0];
-const fontSelect = document.getElementsByClassName('font-select')[0];
-const searchInput = document.getElementById('search-input');
-const searchButton = document.getElementById('search-button');
-const errorText = document.getElementsByClassName('error-text')[0];
-const options = document.getElementsByClassName('option');
-const loadingGif = document.getElementsByClassName('loading-gif')[0];
-const notFound = document.getElementsByClassName('not-found')[0];
-const audioPlayer = document.getElementById('audio-player');
-const playButton = document.getElementsByClassName('play-button')[0];
-const wordEl = document.querySelector('.phonetic h1');
-const phoneticEl = document.querySelector('.phonetic h2');
+const elements = {
+  darkmodeToggle: document.getElementById('darkmode-toggle'),
+  body: document.body,
+  fontSelect: document.querySelector('.font-select'),
+  searchInput: document.getElementById('search-input'),
+  searchButton: document.getElementById('search-button'),
+  errorText: document.querySelector('.error-text'),
+  options: document.querySelectorAll('.option'),
+  loadingGif: document.querySelector('.loading-gif'),
+  notFound: document.querySelector('.not-found'),
+  audioPlayer: document.getElementById('audio-player'),
+  playButton: document.querySelector('.play-button'),
+  wordEl: document.querySelector('.phonetic h1'),
+  phoneticEl: document.querySelector('.phonetic h2'),
+  wordSection: document.querySelector('.word'),
+  meaningSection: document.querySelector('.meanings'),
+  sourceUrlSection: document.querySelector('.source-urls')
+};
 
-const wordSection = document.getElementsByClassName('word')[0];
-const meaningSection = document.getElementsByClassName('meanings')[0];
-const sourceUrlSection = document.getElementsByClassName('source-urls')[0];
+elements.searchInput.value = '';
 
-searchInput.value = '';
+// const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+// if (isDark) {
+//   darkmodeToggle.checked = true;
+// } else {
+//   darkmodeToggle.checked = false;
+// }
 
-if (isDark) {
-  darkmodeToggle.checked = true;
-} else {
-  darkmodeToggle.checked = false;
+elements.darkmodeToggle.checked = window.matchMedia(
+  '(prefers-color-scheme: dark)'
+).matches;
+
+if (elements.darkmodeToggle.checked) {
+  elements.body.classList.add('dark-mode');
 }
 
-if (darkmodeToggle.checked) {
-  body.classList.add('dark-mode');
-}
-
-darkmodeToggle.addEventListener('change', () => {
-  body.classList.toggle('dark-mode');
+elements.darkmodeToggle.addEventListener('change', () => {
+  elements.body.classList.toggle('dark-mode');
 });
 
-for (let i = 0; i < options.length; i++) {
-  options[i].addEventListener('click', () => {
-    body.removeAttribute('class');
-    if (darkmodeToggle.checked) {
-      body.classList.add('dark-mode');
+for (const option of elements.options) {
+  option.addEventListener('click', () => {
+    elements.body.removeAttribute('class');
+    if (elements.darkmodeToggle.checked) {
+      elements.body.classList.add('dark-mode');
     }
-    body.classList.add(
-      options[i].textContent === 'Serif'
+    const font =
+      option.textContent === 'Serif'
         ? 'serif'
-        : options[i].textContent === 'Mono'
+        : option.textContent === 'Mono'
         ? 'mono'
-        : 'sans'
-    );
-    fontSelect.value = options[i].textContent;
-    fontSelect.classList.toggle('open');
+        : 'sans';
+    elements.body.classList.add(font);
+    elements.fontSelect.value = option.textContent;
+    elements.fontSelect.classList.toggle('open');
   });
 }
 
-body.classList.add(
-  fontSelect.value === 'Serif'
+elements.body.classList.add(
+  elements.fontSelect.value === 'Serif'
     ? 'serif'
-    : fontSelect.value === 'Mono'
+    : elements.fontSelect.value === 'Mono'
     ? 'mono'
     : 'sans'
 );
 
-fontSelect.addEventListener('click', () => {
-  fontSelect.classList.toggle('open');
+elements.fontSelect.addEventListener('click', () => {
+  elements.fontSelect.classList.toggle('open');
 });
 
 // font.addEventListener('click', () => {
@@ -76,33 +81,35 @@ fontSelect.addEventListener('click', () => {
 //   }
 // });
 
-searchButton.addEventListener('click', () => searchResult());
+elements.searchButton.addEventListener('click', () => searchResult());
 
-searchInput.onfocus = (event) => {
-  event.preventDefault();
+elements.searchInput.addEventListener('input', () => {
   removeMessage();
-};
+});
 
-searchInput.addEventListener('keypress', (event) => {
-  if (event.key === 'Enter' && document.activeElement === searchInput) {
+elements.searchInput.addEventListener('keypress', (event) => {
+  if (
+    event.key === 'Enter' &&
+    document.activeElement === elements.searchInput
+  ) {
     event.preventDefault();
     searchResult();
   }
 });
 
 const removeMessage = () => {
-  if (!errorText.classList.contains('hide')) {
-    errorText.classList.add('hide');
-    searchInput.removeAttribute('style');
+  if (!elements.errorText.classList.contains('hide')) {
+    elements.errorText.classList.add('hide');
+    elements.searchInput.removeAttribute('style');
   }
 };
 
 const searchResult = async () => {
-  if (!searchInput.value) {
-    errorText.classList.remove('hide');
-    searchInput.style.outline = '1px solid #ff5252';
+  if (!elements.searchInput.value) {
+    elements.errorText.classList.remove('hide');
+    elements.searchInput.style.outline = '1px solid #ff5252';
   } else {
-    const data = await fetchData(searchInput.value);
+    const data = await fetchData(elements.searchInput.value);
     if (Array.isArray(data)) {
       const { word, phonetic, phonetics, meanings, sourceUrls } = data[0];
       renderData(word, phonetic, phonetics, meanings, sourceUrls);
@@ -123,41 +130,52 @@ const fetchData = async (text) => {
       return await response.json();
     }
   } catch (err) {
-    notFound.classList.remove('hide');
-    loadingGif.classList.toggle('hide');
+    elements.notFound.classList.remove('hide');
+    elements.loadingGif.classList.toggle('hide');
     console.error(err);
   }
 };
 
 const preFetchingActions = () => {
-  !notFound.classList.contains('hide') && notFound.classList.add('hide');
-  !wordSection.classList.contains('hide') && wordSection.classList.add('hide');
-  !meaningSection.classList.contains('hide') &&
-    meaningSection.classList.add('hide');
-  !sourceUrlSection.classList.contains('hide') &&
-    sourceUrlSection.classList.add('hide');
+  !elements.notFound.classList.contains('hide') &&
+    elements.notFound.classList.add('hide');
+  !elements.wordSection.classList.contains('hide') &&
+    elements.wordSection.classList.add('hide');
+  !elements.meaningSection.classList.contains('hide') &&
+    elements.meaningSection.classList.add('hide');
+  !elements.sourceUrlSection.classList.contains('hide') &&
+    elements.sourceUrlSection.classList.add('hide');
 
-  loadingGif.classList.toggle('hide');
+  elements.loadingGif.classList.toggle('hide');
 };
 
 const fetchSuccessActions = () => {
   removeMessage();
-  !notFound.classList.contains('hide') && notFound.classList.add('hide');
-  wordSection.classList.remove('hide');
-  meaningSection.classList.remove('hide');
-  sourceUrlSection.classList.remove('hide');
+  !elements.notFound.classList.contains('hide') &&
+    elements.notFound.classList.add('hide');
+  elements.wordSection.classList.remove('hide');
+  elements.meaningSection.classList.remove('hide');
+  elements.sourceUrlSection.classList.remove('hide');
 
-  loadingGif.classList.toggle('hide');
+  elements.loadingGif.classList.toggle('hide');
 };
 
 const renderData = (word, phonetic, phonetics, meanings, sourceUrls) => {
   renderPhonetics(word, phonetic, phonetics);
+  while (elements.meaningSection.firstChild) {
+    elements.meaningSection.removeChild(elements.meaningSection.firstChild);
+  }
   renderMeanings(meanings);
-  renderSourceUrls(sourceUrls);
+  renderSourceUrls(sourceUrls, () => {
+    const el = document.querySelectorAll('.source-urls ul');
+    if (el.length > 1) {
+      elements.sourceUrlSection.removeChild(el[0]);
+    }
+  });
 };
 
 const renderPhonetics = (word, phonetic = '', phonetics) => {
-  wordEl.innerHTML = word;
+  elements.wordEl.innerHTML = word;
 
   const { text, audio } = phonetics.reduce((initial, data) => {
     const { text, audio } = data;
@@ -171,25 +189,125 @@ const renderPhonetics = (word, phonetic = '', phonetics) => {
     return initial;
   }, {});
 
-  phoneticEl.innerHTML = text ?? phonetic;
+  elements.phoneticEl.innerHTML = text ?? phonetic;
 
   if (audio) {
-    audioPlayer.setAttribute('src', audio);
-    playButton.classList.remove('hide');
+    elements.audioPlayer.setAttribute('src', audio);
+    elements.playButton.classList.remove('hide');
   } else {
-    !playButton.classList.contains('hide') && playButton.classList.add('hide');
-    audioPlayer.removeAttribute('src');
-    audioPlayer.setAttribute('muted', true);
+    !elements.playButton.classList.contains('hide') &&
+      elements.playButton.classList.add('hide');
+    elements.audioPlayer.removeAttribute('src');
+    elements.audioPlayer.setAttribute('muted', true);
   }
 };
 
-playButton.addEventListener('click', () => {
-  audioPlayer.controls = true;
-  audioPlayer.play();
+elements.playButton.addEventListener('click', () => {
+  elements.audioPlayer.controls = true;
+  elements.audioPlayer.play();
 });
 
 const renderMeanings = (meanings) => {
-  
+  for (const meaning of meanings) {
+    const containerDiv = document.createElement('div');
+
+    const h2Meaning = document.createElement('h2');
+    h2Meaning.textContent = meaning.partOfSpeech;
+    containerDiv.appendChild(h2Meaning);
+
+    const h3Meaning = document.createElement('h3');
+    h3Meaning.textContent = 'Meaning';
+    containerDiv.appendChild(h3Meaning);
+
+    const ulMeanings = document.createElement('ul');
+    for (const definition of meaning.definitions) {
+      const li = document.createElement('li');
+      const h4 = document.createElement('h4');
+      h4.textContent = definition.definition;
+      li.appendChild(h4);
+      if (definition.example) {
+        const p = document.createElement('p');
+        p.textContent = `"${definition.example}"`;
+        definition.example && li.appendChild(p);
+      }
+      ulMeanings.appendChild(li);
+    }
+    containerDiv.appendChild(ulMeanings);
+
+    const divSynonyms = document.createElement('div');
+    divSynonyms.classList.add('synonyms');
+
+    const h3Synonyms = document.createElement('h3');
+    h3Synonyms.textContent = 'Synonyms';
+
+    if (meaning.synonyms.length !== 0) {
+      const ulSynonyms = document.createElement('ul');
+      for (const synonym of meaning.synonyms) {
+        const liSynonym = document.createElement('li');
+        const aSynonym = document.createElement('a');
+        aSynonym.href = 'javascript:void(0);';
+        aSynonym.textContent = synonym;
+        liSynonym.appendChild(aSynonym);
+        ulSynonyms.appendChild(liSynonym);
+      }
+
+      divSynonyms.appendChild(h3Synonyms);
+      divSynonyms.appendChild(ulSynonyms);
+
+      containerDiv.appendChild(divSynonyms);
+    }
+
+    if (meaning.antonyms.length !== 0) {
+      const divAntonyms = document.createElement('div');
+      divAntonyms.classList.add('antonyms');
+
+      const h3Antonyms = document.createElement('h3');
+      h3Antonyms.textContent = 'Antonyms';
+
+      const ulAntonyms = document.createElement('ul');
+      for (const antonym of meaning.antonyms) {
+        const liAntonyms = document.createElement('li');
+        const aAntonyms = document.createElement('a');
+        aAntonyms.href = 'javascript:void(0);';
+        aAntonyms.textContent = antonym;
+        liAntonyms.appendChild(aAntonyms);
+        ulAntonyms.appendChild(liAntonyms);
+      }
+
+      divAntonyms.appendChild(h3Antonyms);
+      divAntonyms.appendChild(ulAntonyms);
+
+      containerDiv.appendChild(divAntonyms);
+    }
+
+    elements.meaningSection.appendChild(containerDiv);
+  }
 };
 
-const renderSourceUrls = (sourceUrls) => {};
+const renderSourceUrls = (sourceUrls, callback) => {
+  const ul = document.createElement('ul');
+
+  for (const sourceUrl of sourceUrls) {
+    const li = document.createElement('li');
+
+    const a = document.createElement('a');
+    a.href = sourceUrl;
+    a.target = '_blank';
+
+    const anchorText = document.createTextNode(sourceUrl);
+    const img = document.createElement('img');
+    img.src = './assets/images/icon-new-window.svg';
+    img.setAttribute('aria-hidden', 'true');
+
+    a.appendChild(anchorText);
+    a.appendChild(img);
+
+    li.appendChild(a);
+
+    ul.appendChild(li);
+  }
+
+  elements.sourceUrlSection.appendChild(ul);
+
+  callback();
+};
